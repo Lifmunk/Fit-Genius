@@ -4,8 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
+/* Theme Variables */
 @layer base {
   :root {
+    /* Default Fire Theme */
     --background: 0 0% 6%;
     --foreground: 0 0% 98%;
 
@@ -42,11 +44,15 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 0%;
 
-    --gradient-fire: linear-gradient(135deg, hsl(24, 100%, 55%) 0%, hsl(0, 100%, 60%) 100%);
-    --gradient-energy: linear-gradient(135deg, hsl(24, 100%, 55%) 0%, hsl(38, 100%, 60%) 100%);
+    /* Fire Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(24, 100%, 55%) 0%, hsl(0, 100%, 60%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(24, 100%, 55%) 0%, hsl(38, 100%, 60%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 8%) 100%);
+    --gradient-muted: linear-gradient(180deg, hsl(0, 0%, 16%) 0%, hsl(0, 0%, 12%) 100%);
 
     --shadow-glow: 0 0 40px hsl(24, 100%, 55%, 0.2);
+    --shadow-glow-sm: 0 0 20px hsl(24, 100%, 55%, 0.15);
+    --shadow-glow-lg: 0 0 60px hsl(24, 100%, 55%, 0.3);
     --shadow-card: 0 4px 24px hsl(0, 0%, 0%, 0.4);
 
     --font-heading: 'Space Grotesk', sans-serif;
@@ -60,6 +66,74 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 20%;
     --sidebar-ring: 24 100% 55%;
+  }
+
+  /* Ocean Theme */
+  [data-theme="ocean"] {
+    --primary: 199 89% 54%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 188 85% 43%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 199 89% 54%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(199, 89%, 54%) 0%, hsl(188, 85%, 43%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(199, 89%, 54%) 0%, hsl(210, 100%, 60%) 100%);
+    --shadow-glow: 0 0 40px hsl(199, 89%, 54%, 0.2);
+    --shadow-glow-sm: 0 0 20px hsl(199, 89%, 54%, 0.15);
+    --shadow-glow-lg: 0 0 60px hsl(199, 89%, 54%, 0.3);
+    --sidebar-primary: 199 89% 54%;
+    --sidebar-ring: 199 89% 54%;
+  }
+
+  /* Forest Theme */
+  [data-theme="forest"] {
+    --primary: 142 76% 45%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 120 60% 40%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 142 76% 45%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(142, 76%, 45%) 0%, hsl(120, 60%, 40%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(142, 76%, 45%) 0%, hsl(90, 50%, 50%) 100%);
+    --shadow-glow: 0 0 40px hsl(142, 76%, 45%, 0.2);
+    --shadow-glow-sm: 0 0 20px hsl(142, 76%, 45%, 0.15);
+    --shadow-glow-lg: 0 0 60px hsl(142, 76%, 45%, 0.3);
+    --sidebar-primary: 142 76% 45%;
+    --sidebar-ring: 142 76% 45%;
+  }
+
+  /* Sunset Theme */
+  [data-theme="sunset"] {
+    --primary: 280 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 320 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 280 100% 60%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(280, 100%, 60%) 0%, hsl(320, 100%, 55%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(280, 100%, 60%) 0%, hsl(45, 100%, 55%) 100%);
+    --shadow-glow: 0 0 40px hsl(280, 100%, 60%, 0.2);
+    --shadow-glow-sm: 0 0 20px hsl(280, 100%, 60%, 0.15);
+    --shadow-glow-lg: 0 0 60px hsl(280, 100%, 60%, 0.3);
+    --sidebar-primary: 280 100% 60%;
+    --sidebar-ring: 280 100% 60%;
+  }
+
+  /* Berry Theme */
+  [data-theme="berry"] {
+    --primary: 340 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 320 90% 50%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 340 100% 60%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(340, 100%, 60%) 0%, hsl(320, 90%, 50%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(340, 100%, 60%) 0%, hsl(260, 80%, 55%) 100%);
+    --shadow-glow: 0 0 40px hsl(340, 100%, 60%, 0.2);
+    --shadow-glow-sm: 0 0 20px hsl(340, 100%, 60%, 0.15);
+    --shadow-glow-lg: 0 0 60px hsl(340, 100%, 60%, 0.3);
+    --sidebar-primary: 340 100% 60%;
+    --sidebar-ring: 340 100% 60%;
   }
 
   .dark {
@@ -96,6 +170,13 @@
 @layer base {
   * {
     @apply border-border;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -105,23 +186,61 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold tracking-tight;
   }
+
+  /* Smooth focus transitions */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Button press effect */
+  button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Input focus effects */
+  input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
 }
 
 @layer utilities {
-  .gradient-fire {
-    background: var(--gradient-fire);
+  .gradient-primary {
+    background: var(--gradient-primary);
   }
 
-  .gradient-energy {
-    background: var(--gradient-energy);
+  .gradient-secondary {
+    background: var(--gradient-secondary);
   }
 
   .gradient-card {
     background: var(--gradient-card);
   }
 
+  .gradient-muted {
+    background: var(--gradient-muted);
+  }
+
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-glow-sm {
+    box-shadow: var(--shadow-glow-sm);
+  }
+
+  .shadow-glow-lg {
+    box-shadow: var(--shadow-glow-lg);
   }
 
   .shadow-card {
@@ -129,35 +248,221 @@
   }
 
   .text-gradient {
-    background: var(--gradient-fire);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  /* Animation delays for staggered effects */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+
+  /* Smooth scrolling */
+  .scroll-smooth {
+    scroll-behavior: smooth;
   }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px hsl(24, 100%, 55%, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 40px hsl(24, 100%, 55%, 0.6);
-    }
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
   }
 }
+
+/* Skeleton loading animation */
+@keyframes skeleton {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted-foreground) / 0.1) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Toast animations */
+.toast-enter {
+  animation: slideInRight 0.4s ease-out forwards;
+}
+
+.toast-exit {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Accordion smooth transition */
+[data-state="open"] {
+  animation: accordionDown 0.3s ease-out;
+}
+
+[data-state="closed"] {
+  animation: accordionUp 0.3s ease-out;
+}
+
+/* Tab content transition */
+.tab-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress bar smooth animation */
+.progress-animate {
+  animation: progressFill 1s ease-out forwards;
+}
+
+@keyframes progressFill {
+  from {
+    width: 0;
+  }
+}
+
+/* Message animation for chat */
+.message-enter {
+  animation: messageIn 0.3s ease-out forwards;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Glow pulse animation */
+.glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: var(--shadow-glow-sm);
+  }
+  50% {
+    box-shadow: var(--shadow-glow-lg);
+  }
+}
+
+/* Float animation */
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Bounce subtle */
+.bounce-subtle {
+  animation: bounceSubtle 2s ease-in-out infinite;
+}
+
+@keyframes bounceSubtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Shimmer effect for loading */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--primary) / 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Theme transition overlay */
+.theme-transition {
+  transition: all 0.5s ease;
+}
+
+/* Backdrop blur for modals */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(24px);
+}
+

@@ -7,9 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { UserProfile } from '@/types/fitness';
-import { Save, Key, User, ArrowLeft, Eye, EyeOff, ExternalLink } from 'lucide-react';
+import { Save, Key, User, ArrowLeft, Eye, EyeOff, ExternalLink, Palette, Sparkles, Droplets, Leaf, Sunset, Grape } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useTheme, ThemeName } from '@/contexts/ThemeContext';
 
 interface SettingsProps {
   profile: UserProfile;
@@ -17,12 +18,47 @@ interface SettingsProps {
   onBack: () => void;
 }
 
+// Theme configuration
+const THEMES: { id: ThemeName; name: string; icon: React.ReactNode; description: string }[] = [
+  { 
+    id: 'fire', 
+    name: 'Fire', 
+    icon: <Sparkles className="w-4 h-4" />, 
+    description: 'Warm, energetic orange' 
+  },
+  { 
+    id: 'ocean', 
+    name: 'Ocean', 
+    icon: <Droplets className="w-4 h-4" />, 
+    description: 'Calm, refreshing blue' 
+  },
+  { 
+    id: 'forest', 
+    name: 'Forest', 
+    icon: <Leaf className="w-4 h-4" />, 
+    description: 'Natural, balanced green' 
+  },
+  { 
+    id: 'sunset', 
+    name: 'Sunset', 
+    icon: <Sunset className="w-4 h-4" />, 
+    description: 'Vibrant, creative purple' 
+  },
+  { 
+    id: 'berry', 
+    name: 'Berry', 
+    icon: <Grape className="w-4 h-4" />, 
+    description: 'Playful, modern pink' 
+  },
+];
+
 const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
   const [formData, setFormData] = useState<UserProfile>(profile);
   const [customApiKey, setCustomApiKey] = useLocalStorage<string>('fitgenius-gemini-api-key', '');
   const [useCustomApi, setUseCustomApi] = useLocalStorage<boolean>('fitgenius-use-custom-api', false);
   const [showApiKey, setShowApiKey] = useState(false);
   const [tempApiKey, setTempApiKey] = useState(customApiKey);
+  const { theme, setTheme } = useTheme();
 
   const handleProfileSave = () => {
     onProfileUpdate(formData);
@@ -41,12 +77,17 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
     toast.success('API key cleared');
   };
 
+  const handleThemeChange = (newTheme: ThemeName) => {
+    setTheme(newTheme);
+    toast.success(`Theme changed to ${THEMES.find(t => t.id === newTheme)?.name}`);
+  };
+
   return (
     <div className="min-h-screen bg-background p-4 md:p-8">
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button variant="ghost" size="icon" onClick={onBack}>
+          <Button variant="ghost" size="icon" onClick={onBack} className="hover:bg-muted/50">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
@@ -54,6 +95,47 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
             <p className="text-muted-foreground text-sm">Manage your profile and preferences</p>
           </div>
         </div>
+
+        {/* Theme Selection */}
+        <Card className="border-border/50 shadow-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Palette className="w-5 h-5 text-primary" />
+              Theme
+            </CardTitle>
+            <CardDescription>Choose your preferred color theme</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-5 gap-3">
+              {THEMES.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => handleThemeChange(t.id)}
+                  className={`relative group p-4 rounded-xl border-2 transition-all duration-300 ${
+                    theme === t.id 
+                      ? 'border-primary shadow-glow' 
+                      : 'border-border/50 hover:border-primary/50'
+                  }`}
+                >
+                  <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center transition-all duration-300 ${
+                    theme === t.id 
+                      ? 'gradient-primary text-white shadow-glow' 
+                      : 'bg-muted text-muted-foreground group-hover:bg-primary/10'
+                  }`}>
+                    {t.icon}
+                  </div>
+                  <p className="text-xs text-center mt-2 font-medium">{t.name}</p>
+                  {theme === t.id && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse" />
+                  )}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-3">
+              Current: <span className="font-medium">{THEMES.find(t => t.id === theme)?.name} Theme</span>
+            </p>
+          </CardContent>
+        </Card>
 
         {/* Profile Settings */}
         <Card className="border-border/50 shadow-card">
@@ -72,7 +154,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-background"
+                  className="bg-background transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
 
@@ -83,7 +165,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                   type="number"
                   value={formData.age}
                   onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
-                  className="bg-background"
+                  className="bg-background transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
 
@@ -95,7 +177,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                     type="number"
                     value={formData.weight}
                     onChange={(e) => setFormData({ ...formData, weight: parseFloat(e.target.value) || 0 })}
-                    className="bg-background flex-1"
+                    className="bg-background flex-1 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                   />
                   <Select
                     value={formData.weightUnit}
@@ -120,7 +202,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                     type="number"
                     value={formData.height}
                     onChange={(e) => setFormData({ ...formData, height: parseFloat(e.target.value) || 0 })}
-                    className="bg-background flex-1"
+                    className="bg-background flex-1 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                   />
                   <Select
                     value={formData.heightUnit}
@@ -216,7 +298,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                 value={formData.equipment || ''}
                 onChange={(e) => setFormData({ ...formData, equipment: e.target.value })}
                 placeholder="e.g., Dumbbells, Resistance bands, Pull-up bar..."
-                className="bg-background resize-none"
+                className="bg-background resize-none transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 rows={2}
               />
             </div>
@@ -228,7 +310,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                 value={formData.dietaryPreferences || ''}
                 onChange={(e) => setFormData({ ...formData, dietaryPreferences: e.target.value })}
                 placeholder="e.g., Vegetarian, High-protein, Low-carb..."
-                className="bg-background resize-none"
+                className="bg-background resize-none transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 rows={2}
               />
             </div>
@@ -240,12 +322,12 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                 value={formData.allergies || ''}
                 onChange={(e) => setFormData({ ...formData, allergies: e.target.value })}
                 placeholder="e.g., Peanuts, Lactose intolerant..."
-                className="bg-background resize-none"
+                className="bg-background resize-none transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 rows={2}
               />
             </div>
 
-            <Button onClick={handleProfileSave} className="w-full gradient-fire">
+            <Button onClick={handleProfileSave} className="w-full gradient-primary transition-all duration-300 hover:shadow-glow">
               <Save className="w-4 h-4 mr-2" />
               Save Profile
             </Button>
@@ -289,7 +371,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                       value={tempApiKey}
                       onChange={(e) => setTempApiKey(e.target.value)}
                       placeholder="Enter your Gemini API key..."
-                      className="bg-background pr-10"
+                      className="bg-background pr-10 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                     />
                     <Button
                       type="button"
@@ -323,7 +405,7 @@ const Settings = ({ profile, onProfileUpdate, onBack }: SettingsProps) => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button onClick={handleApiKeySave} className="flex-1 gradient-fire">
+                  <Button onClick={handleApiKeySave} className="flex-1 gradient-primary transition-all duration-300 hover:shadow-glow">
                     <Save className="w-4 h-4 mr-2" />
                     Save API Key
                   </Button>

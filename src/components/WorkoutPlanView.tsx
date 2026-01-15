@@ -61,17 +61,17 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
     return (
       <Card className="border-border/50 shadow-card">
         <CardContent className="flex flex-col items-center justify-center py-16">
-          <div className="p-4 rounded-2xl gradient-fire mb-6 shadow-glow animate-pulse-glow">
+          <div className="p-4 rounded-2xl gradient-primary mb-6 shadow-glow animate-pulse-glow transition-all duration-300 hover:shadow-glow-lg">
             <Dumbbell className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h2 className="text-2xl font-heading font-bold mb-2">Ready to Start Training?</h2>
-          <p className="text-muted-foreground text-center max-w-md mb-6">
+          <h2 className="text-2xl font-heading font-bold mb-2 animate-fade-in">Ready to Start Training?</h2>
+          <p className="text-muted-foreground text-center max-w-md mb-6 animate-fade-in animation-delay-200">
             Let our AI create a personalized 7-day workout plan tailored to your goals and fitness level.
           </p>
           <Button
             onClick={generatePlan}
             disabled={loading}
-            className="gradient-fire border-0 hover:opacity-90 shadow-glow text-lg px-8 py-6"
+            className="gradient-primary border-0 hover:opacity-90 transition-all duration-300 hover:shadow-glow text-lg px-8 py-6 animate-fade-in animation-delay-300"
           >
             {loading ? (
               <>
@@ -92,7 +92,7 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in">
         <div>
           <h2 className="text-2xl font-heading font-bold">Your Workout Plan</h2>
           <p className="text-muted-foreground text-sm">
@@ -103,7 +103,7 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
           onClick={generatePlan}
           disabled={loading}
           variant="outline"
-          className="border-primary/50 hover:bg-primary/10"
+          className="border-primary/50 hover:bg-primary/10 transition-all duration-200"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -115,7 +115,7 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
       </div>
 
       {workoutPlan.tips && workoutPlan.tips.length > 0 && (
-        <Card className="border-warning/30 bg-warning/5">
+        <Card className="border-warning/30 bg-warning/5 animate-fade-in animation-delay-100">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-warning mt-0.5" />
@@ -123,7 +123,7 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
                 <p className="font-medium text-warning mb-2">Pro Tips</p>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   {workoutPlan.tips.map((tip, i) => (
-                    <li key={i}>• {tip}</li>
+                    <li key={i} className="animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>• {tip}</li>
                   ))}
                 </ul>
               </div>
@@ -137,11 +137,12 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
           <AccordionItem
             key={index}
             value={`day-${index}`}
-            className="border border-border/50 rounded-xl overflow-hidden bg-card shadow-card"
+            className="border border-border/50 rounded-xl overflow-hidden bg-card shadow-card transition-all duration-300 hover:shadow-glow"
+            style={{ animationDelay: `${index * 100}ms` }}
           >
-            <AccordionTrigger className="px-4 py-4 hover:no-underline hover:bg-muted/30">
+            <AccordionTrigger className="px-4 py-4 hover:no-underline hover:bg-muted/30 transition-all duration-200">
               <div className="flex items-center gap-4 w-full">
-                <div className="p-2 rounded-lg gradient-fire">
+                <div className="p-2 rounded-lg gradient-primary transition-transform duration-300 hover:scale-110">
                   <Dumbbell className="w-4 h-4 text-primary-foreground" />
                 </div>
                 <div className="flex-1 text-left">
@@ -154,23 +155,23 @@ const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanV
                 </div>
               </div>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="animate-accordion-down">
               <div className="px-4 pb-4 space-y-3">
                 {day.exercises.map((exercise, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30"
+                    className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30 transition-all duration-200 hover:bg-muted/50 hover:border-primary/20"
                   >
                     <div className="flex-1">
-                      <p className="font-medium">{exercise.name}</p>
+                      <p className="font-medium transition-colors duration-200 hover:text-primary">{exercise.name}</p>
                       {exercise.notes && (
                         <p className="text-xs text-muted-foreground mt-1">{exercise.notes}</p>
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="secondary">{exercise.sets} sets</Badge>
-                      <Badge variant="secondary">{exercise.reps}</Badge>
-                      <Badge variant="outline" className="text-muted-foreground">
+                      <Badge variant="secondary" className="transition-all duration-200 hover:scale-105">{exercise.sets} sets</Badge>
+                      <Badge variant="secondary" className="transition-all duration-200 hover:scale-105">{exercise.reps}</Badge>
+                      <Badge variant="outline" className="text-muted-foreground transition-all duration-200 hover:scale-105">
                         {exercise.rest}
                       </Badge>
                     </div>

@@ -20,6 +20,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
   const [newEntry, setNewEntry] = useState<Partial<ProgressEntry>>({
     date: new Date().toISOString().split('T')[0],
   });
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleAddEntry = () => {
     if (!newEntry.weight && !newEntry.workoutsCompleted && !newEntry.notes) {
@@ -68,11 +69,11 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in">
         <h2 className="text-2xl font-heading font-bold">Track Your Progress</h2>
         <Button
           onClick={() => setShowForm(!showForm)}
-          className="gradient-fire border-0 hover:opacity-90"
+          className="gradient-primary border-0 hover:opacity-90 transition-all duration-300 hover:shadow-glow"
         >
           <Plus className="w-4 h-4 mr-2" />
           Log Progress
@@ -81,10 +82,10 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-border/50 shadow-card">
+        <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-100">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-primary/10">
+              <div className="p-3 rounded-xl bg-primary/10 transition-transform duration-300 hover:scale-110">
                 <Scale className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1">
@@ -94,7 +95,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                 </p>
               </div>
               {trend && (
-                <div className={`flex items-center gap-1 text-sm ${
+                <div className={`flex items-center gap-1 text-sm transition-all duration-300 ${
                   trend.diff > 0 ? 'text-warning' : trend.diff < 0 ? 'text-success' : 'text-muted-foreground'
                 }`}>
                   {trend.diff > 0 ? (
@@ -111,10 +112,10 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
           </CardContent>
         </Card>
 
-        <Card className="border-border/50 shadow-card">
+        <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-success/10">
+              <div className="p-3 rounded-xl bg-success/10 transition-transform duration-300 hover:scale-110">
                 <Dumbbell className="w-6 h-6 text-success" />
               </div>
               <div>
@@ -125,10 +126,10 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
           </CardContent>
         </Card>
 
-        <Card className="border-border/50 shadow-card">
+        <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-300">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-accent/10">
+              <div className="p-3 rounded-xl bg-accent/10 transition-transform duration-300 hover:scale-110">
                 <Calendar className="w-6 h-6 text-accent" />
               </div>
               <div>
@@ -155,7 +156,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                   type="date"
                   value={newEntry.date}
                   onChange={(e) => setNewEntry({ ...newEntry, date: e.target.value })}
-                  className="mt-1.5"
+                  className="mt-1.5 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <div>
@@ -167,7 +168,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                   placeholder={`${profile.weight}`}
                   value={newEntry.weight || ''}
                   onChange={(e) => setNewEntry({ ...newEntry, weight: parseFloat(e.target.value) || undefined })}
-                  className="mt-1.5"
+                  className="mt-1.5 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
               <div>
@@ -179,7 +180,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                   placeholder="1"
                   value={newEntry.workoutsCompleted || ''}
                   onChange={(e) => setNewEntry({ ...newEntry, workoutsCompleted: parseInt(e.target.value) || undefined })}
-                  className="mt-1.5"
+                  className="mt-1.5 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
             </div>
@@ -190,14 +191,14 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                 placeholder="How did you feel today?"
                 value={newEntry.notes || ''}
                 onChange={(e) => setNewEntry({ ...newEntry, notes: e.target.value })}
-                className="mt-1.5"
+                className="mt-1.5 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
               />
             </div>
             <div className="flex gap-3">
-              <Button onClick={handleAddEntry} className="gradient-fire border-0">
+              <Button onClick={handleAddEntry} className="gradient-primary border-0 transition-all duration-300 hover:shadow-glow">
                 Save Entry
               </Button>
-              <Button variant="outline" onClick={() => setShowForm(false)}>
+              <Button variant="outline" onClick={() => setShowForm(false)} className="transition-all duration-200 hover:bg-primary/10">
                 Cancel
               </Button>
             </div>
@@ -207,7 +208,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
 
       {/* Weight Chart */}
       {chartData.length > 1 && (
-        <Card className="border-border/50 shadow-card">
+        <Card className="border-border/50 shadow-card animate-fade-in animation-delay-200">
           <CardHeader>
             <CardTitle className="text-lg">Weight Progress</CardTitle>
           </CardHeader>
@@ -231,6 +232,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                     stroke="hsl(var(--primary))"
                     strokeWidth={3}
                     dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2 }}
+                    animationDuration={1000}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -241,7 +243,7 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
 
       {/* Recent Entries */}
       {progress.length > 0 && (
-        <Card className="border-border/50 shadow-card">
+        <Card className="border-border/50 shadow-card animate-fade-in animation-delay-300">
           <CardHeader>
             <CardTitle className="text-lg">Recent Entries</CardTitle>
           </CardHeader>
@@ -250,14 +252,15 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
               {[...progress].reverse().slice(0, 10).map((entry, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30"
+                  className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border/30 transition-all duration-200 hover:bg-muted/50 hover:border-primary/20 animate-fade-in"
+                  style={{ animationDelay: `${i * 50}ms` }}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10">
+                    <div className="p-2 rounded-lg bg-primary/10 transition-transform duration-300 hover:scale-110">
                       <Calendar className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium">
+                      <p className="font-medium transition-colors duration-200 hover:text-primary">
                         {new Date(entry.date).toLocaleDateString('en-US', {
                           weekday: 'short',
                           month: 'short',
@@ -273,12 +276,12 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
                   </div>
                   <div className="flex items-center gap-4 text-sm">
                     {entry.weight && (
-                      <span className="text-muted-foreground">
+                      <span className="text-muted-foreground transition-colors duration-200 hover:text-primary">
                         {entry.weight} {profile.weightUnit}
                       </span>
                     )}
                     {entry.workoutsCompleted && (
-                      <span className="text-success">
+                      <span className="text-success transition-all duration-200 hover:scale-105">
                         {entry.workoutsCompleted} workout{entry.workoutsCompleted > 1 ? 's' : ''}
                       </span>
                     )}
@@ -293,10 +296,10 @@ const ProgressTracker = ({ profile, progress, onProgressUpdate }: ProgressTracke
       {progress.length === 0 && !showForm && (
         <Card className="border-border/50 shadow-card">
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <div className="p-4 rounded-2xl bg-muted mb-4">
+            <div className="p-4 rounded-2xl bg-muted mb-4 transition-transform duration-300 hover:scale-110">
               <TrendingUp className="w-8 h-8 text-muted-foreground" />
             </div>
-            <p className="text-muted-foreground text-center">
+            <p className="text-muted-foreground text-center transition-all duration-200 hover:text-foreground">
               No progress entries yet. Start logging to see your journey!
             </p>
           </CardContent>

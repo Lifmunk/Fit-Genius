@@ -52,25 +52,35 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background theme-transition">
       {/* Header */}
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-50 theme-transition">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl gradient-fire shadow-glow">
+          <div className="flex items-center gap-3 animate-fade-in">
+            <div className="p-2 rounded-xl gradient-primary shadow-glow transition-all duration-300 hover:shadow-glow-lg">
               <Dumbbell className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-heading font-bold text-gradient">FitGenius</span>
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground transition-all duration-200 hover:text-foreground">
               <User className="w-4 h-4" />
               <span>{profile.name}</span>
             </div>
-            <Button variant="ghost" size="icon" onClick={() => setShowSettings(true)} className="text-muted-foreground">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setShowSettings(true)} 
+              className="text-muted-foreground transition-all duration-200 hover:bg-primary/10 hover:text-primary"
+            >
               <SettingsIcon className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="sm" onClick={onLogout} className="text-muted-foreground">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={onLogout} 
+              className="text-muted-foreground transition-all duration-200 hover:bg-primary/10 hover:text-primary"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               Reset
             </Button>
@@ -81,10 +91,10 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
       <main className="container mx-auto px-4 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <Card className="border-border/50 shadow-card">
+          <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-100">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
+                <div className="p-2 rounded-lg bg-primary/10 transition-transform duration-300 hover:scale-110">
                   <Target className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -95,10 +105,10 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-card">
+          <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-200">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-success/10">
+                <div className="p-2 rounded-lg bg-success/10 transition-transform duration-300 hover:scale-110">
                   <TrendingUp className="w-5 h-5 text-success" />
                 </div>
                 <div>
@@ -109,10 +119,10 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-card">
+          <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-300">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-warning/10">
+                <div className="p-2 rounded-lg bg-warning/10 transition-transform duration-300 hover:scale-110">
                   <Flame className="w-5 h-5 text-warning" />
                 </div>
                 <div>
@@ -123,10 +133,10 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
             </CardContent>
           </Card>
 
-          <Card className="border-border/50 shadow-card">
+          <Card className="border-border/50 shadow-card card-hover transition-all duration-300 animate-fade-in-up animation-delay-400">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-accent/10">
+                <div className="p-2 rounded-lg bg-accent/10 transition-transform duration-300 hover:scale-110">
                   <Calendar className="w-5 h-5 text-accent" />
                 </div>
                 <div>
@@ -145,28 +155,28 @@ const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
           <TabsList className="grid grid-cols-4 gap-2 bg-card border border-border/50 p-1 h-auto">
             <TabsTrigger
               value="workout"
-              className="flex items-center gap-2 py-3 data-[state=active]:gradient-fire data-[state=active]:text-primary-foreground"
+              className="flex items-center gap-2 py-3 data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground transition-all duration-300"
             >
               <Dumbbell className="w-4 h-4" />
               <span className="hidden sm:inline">Workout</span>
             </TabsTrigger>
             <TabsTrigger
               value="diet"
-              className="flex items-center gap-2 py-3 data-[state=active]:gradient-fire data-[state=active]:text-primary-foreground"
+              className="flex items-center gap-2 py-3 data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground transition-all duration-300"
             >
               <Utensils className="w-4 h-4" />
               <span className="hidden sm:inline">Diet</span>
             </TabsTrigger>
             <TabsTrigger
               value="progress"
-              className="flex items-center gap-2 py-3 data-[state=active]:gradient-fire data-[state=active]:text-primary-foreground"
+              className="flex items-center gap-2 py-3 data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground transition-all duration-300"
             >
               <TrendingUp className="w-4 h-4" />
               <span className="hidden sm:inline">Progress</span>
             </TabsTrigger>
             <TabsTrigger
               value="chat"
-              className="flex items-center gap-2 py-3 data-[state=active]:gradient-fire data-[state=active]:text-primary-foreground"
+              className="flex items-center gap-2 py-3 data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground transition-all duration-300"
             >
               <MessageSquare className="w-4 h-4" />
               <span className="hidden sm:inline">Coach</span>
