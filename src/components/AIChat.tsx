@@ -25,6 +25,15 @@ const AIChat = ({ profile, chatHistory, onChatUpdate }: AIChatProps) => {
     }
   }, [chatHistory]);
 
+  const getCustomApiKey = () => {
+    const useCustomApi = localStorage.getItem('fitgenius-use-custom-api');
+    if (useCustomApi === 'true') {
+      const apiKey = localStorage.getItem('fitgenius-gemini-api-key');
+      return apiKey ? JSON.parse(apiKey) : null;
+    }
+    return null;
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
 
@@ -46,11 +55,13 @@ const AIChat = ({ profile, chatHistory, onChatUpdate }: AIChatProps) => {
         content: m.content,
       }));
 
+      const customApiKey = getCustomApiKey();
       const { data, error } = await supabase.functions.invoke('ai-trainer', {
         body: {
           type: 'chat',
           userProfile: profile,
           messages,
+          customApiKey,
         },
       });
 

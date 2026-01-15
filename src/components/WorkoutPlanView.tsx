@@ -17,13 +17,24 @@ interface WorkoutPlanViewProps {
 const WorkoutPlanView = ({ profile, workoutPlan, onPlanGenerated }: WorkoutPlanViewProps) => {
   const [loading, setLoading] = useState(false);
 
+  const getCustomApiKey = () => {
+    const useCustomApi = localStorage.getItem('fitgenius-use-custom-api');
+    if (useCustomApi === 'true') {
+      const apiKey = localStorage.getItem('fitgenius-gemini-api-key');
+      return apiKey ? JSON.parse(apiKey) : null;
+    }
+    return null;
+  };
+
   const generatePlan = async () => {
     setLoading(true);
     try {
+      const customApiKey = getCustomApiKey();
       const { data, error } = await supabase.functions.invoke('ai-trainer', {
         body: {
           type: 'workout',
           userProfile: profile,
+          customApiKey,
         },
       });
 

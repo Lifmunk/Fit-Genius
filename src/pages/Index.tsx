@@ -10,6 +10,10 @@ const Index = () => {
     setUserProfile(profile);
   };
 
+  const handleProfileUpdate = (profile: UserProfile) => {
+    setUserProfile(profile);
+  };
+
   const handleLogout = () => {
     localStorage.clear();
     setUserProfile(null);
@@ -19,7 +23,7 @@ const Index = () => {
     return <OnboardingForm onComplete={handleOnboardingComplete} />;
   }
 
-  return <Dashboard profile={userProfile} onLogout={handleLogout} />;
+  return <Dashboard profile={userProfile} onProfileUpdate={handleProfileUpdate} onLogout={handleLogout} />;
 };
 
 export default Index;
