@@ -11,11 +11,14 @@ serve(async (req) => {
   }
 
   try {
-    const { type, userProfile, messages } = await req.json();
+    const { type, userProfile, messages, customApiKey } = await req.json();
+    
+    // Use custom Gemini API key if provided, otherwise use Lovable AI
+    const useCustomApi = customApiKey && customApiKey.trim().length > 0;
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    if (!useCustomApi && !LOVABLE_API_KEY) {
+      throw new Error("No API key configured");
     }
 
     let systemPrompt = "";
@@ -125,14 +128,28 @@ User Profile:
 Be encouraging, supportive, and provide actionable advice. Keep responses concise but helpful.`;
     }
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Configure API endpoint and headers based on whether using custom API
+    const apiUrl = useCustomApi 
+      ? "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+      : "https://ai.gateway.lovable.dev/v1/chat/completions";
+    
+    const apiHeaders = useCustomApi
+      ? {
+          "Authorization": `Bearer ${customApiKey}`,
+          "Content-Type": "application/json",
+        }
+      : {
+          "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        };
+
+    const modelName = useCustomApi ? "gemini-2.0-flash" : "google/gemini-3-flash-preview";
+
+    const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
+      headers: apiHeaders,
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: modelName,
         messages: [
           { role: "system", content: systemPrompt },
           ...(messages || [{ role: "user", content: "Generate the plan" }]),

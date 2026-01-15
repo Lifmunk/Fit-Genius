@@ -3,20 +3,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UserProfile, WorkoutPlan, DietPlan, ProgressEntry, ChatMessage } from '@/types/fitness';
-import { Dumbbell, Utensils, TrendingUp, MessageSquare, User, LogOut, Flame, Target, Calendar } from 'lucide-react';
+import { Dumbbell, Utensils, TrendingUp, MessageSquare, User, LogOut, Flame, Target, Calendar, Settings as SettingsIcon } from 'lucide-react';
 import WorkoutPlanView from './WorkoutPlanView';
 import DietPlanView from './DietPlanView';
 import ProgressTracker from './ProgressTracker';
 import AIChat from './AIChat';
+import Settings from './Settings';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface DashboardProps {
   profile: UserProfile;
+  onProfileUpdate: (profile: UserProfile) => void;
   onLogout: () => void;
 }
 
-const Dashboard = ({ profile, onLogout }: DashboardProps) => {
+const Dashboard = ({ profile, onProfileUpdate, onLogout }: DashboardProps) => {
   const [activeTab, setActiveTab] = useState('workout');
+  const [showSettings, setShowSettings] = useState(false);
   const [workoutPlan, setWorkoutPlan] = useLocalStorage<WorkoutPlan | null>('fitgenius-workout', null);
   const [dietPlan, setDietPlan] = useLocalStorage<DietPlan | null>('fitgenius-diet', null);
   const [progress, setProgress] = useLocalStorage<ProgressEntry[]>('fitgenius-progress', []);
@@ -38,6 +41,16 @@ const Dashboard = ({ profile, onLogout }: DashboardProps) => {
     return (weightKg / (heightM * heightM)).toFixed(1);
   };
 
+  if (showSettings) {
+    return (
+      <Settings
+        profile={profile}
+        onProfileUpdate={onProfileUpdate}
+        onBack={() => setShowSettings(false)}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -54,6 +67,9 @@ const Dashboard = ({ profile, onLogout }: DashboardProps) => {
               <User className="w-4 h-4" />
               <span>{profile.name}</span>
             </div>
+            <Button variant="ghost" size="icon" onClick={() => setShowSettings(true)} className="text-muted-foreground">
+              <SettingsIcon className="w-5 h-5" />
+            </Button>
             <Button variant="ghost" size="sm" onClick={onLogout} className="text-muted-foreground">
               <LogOut className="w-4 h-4 mr-2" />
               Reset
