@@ -1,73 +1,290 @@
-# Welcome to your Lovable project
+# FitGenius AI
 
-## Project info
+FitGenius AI is your personal AI-powered fitness companion. It provides personalized workout plans, diet plans, and AI coaching to help you achieve your fitness goals.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![FitGenius AI Dashboard](https://via.placeholder.com/800x400?text=FitGenius+AI+Dashboard)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+### 🤖 AI-Powered Personalization
+- **Smart Onboarding**: Collects your fitness goals, body measurements, and preferences
+- **Personalized Workout Plans**: Custom weekly workout routines based on your profile
+- **Customized Diet Plans**: Meal plans tailored to your dietary needs and goals
 
-**Use Lovable**
+### 💬 AI Chat Coach
+- Ask questions about workouts, nutrition, and fitness
+- Get exercise form tips and recommendations
+- Receive motivation and accountability support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 📊 Progress Tracking
+- Track your workouts and weight progress
+- BMI calculator
+- Visual progress charts and statistics
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🎯 Key Stats Dashboard
+- Goal tracking (Weight Loss, Gain, Maintenance, Muscle Building)
+- BMI calculation
+- Weight monitoring
+- Workout completion counter
 
-**Use your preferred IDE**
+## How It Works
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 1. Onboarding
+When you first open the app, you'll go through a 4-step onboarding process:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Basic Info**: Enter your name, age, and gender
+2. **Body Measurements**: Input your weight and height (supports kg/lbs and cm/ft)
+3. **Fitness Goals**: Select your primary fitness goal and experience level
+4. **Additional Details**: Specify available equipment and dietary preferences
 
-Follow these steps:
+### 2. Dashboard Overview
+After onboarding, you'll see your personalized dashboard with:
+- Quick stats (Goal, BMI, Weight, Workouts)
+- Tab navigation to Workout, Diet, Progress, and AI Coach sections
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 3. Generate Plans
+- **Workout Plan**: Click "Generate Plan" to create a personalized 7-day workout routine
+- **Diet Plan**: Click "Generate Plan" to receive customized meal plans with macro breakdowns
+- **AI Coach**: Chat with your AI fitness coach for any questions or advice
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 4. Track Progress
+- Log your weight and workouts
+- View progress over time with visual charts
+- Update your profile anytime in Settings
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Tech Stack
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Backend**: Supabase (Edge Functions)
+- **AI**: Google Gemini API (via Supabase Edge Functions)
+- **State Management**: React Query + LocalStorage
+- **Routing**: React Router DOM
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm
+- Supabase account (for backend)
+- Google Gemini API key (optional - can use default Lovable AI gateway)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd ai-fit-buddy
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to:
+```
+http://localhost:8080
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Environment Variables
 
-**Use GitHub Codespaces**
+Create a `.env` file in the root directory:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```env
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-## What technologies are used for this project?
+## Supabase Setup
 
-This project is built with:
+### 1. Create a Supabase Project
+1. Go to [Supabase](https://supabase.com) and create a new project
+2. Note your project URL and anon key
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### 2. Set Up Edge Functions
+1. In your Supabase dashboard, go to **Edge Functions**
+2. Create a new function named `ai-trainer`
+3. Copy the code from `supabase/functions/ai-trainer/index.ts`
+4. Deploy the function
 
-## How can I deploy this project?
+### 3. Configure Environment
+Add your Supabase credentials to your environment variables.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Deploying to Vercel
 
-## Can I connect a custom domain to my Lovable project?
+Vercel is the recommended platform for deploying this React application. Follow these steps:
 
-Yes, you can!
+### Option 1: Deploy via Vercel CLI
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. **Install Vercel CLI**:
+```bash
+npm i -g vercel
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+2. **Login to Vercel**:
+```bash
+vercel login
+```
+
+3. **Deploy**:
+```bash
+cd ai-fit-buddy
+vercel
+```
+
+4. **Follow the prompts**:
+   - Set up and deploy? → Yes
+   - Which scope? → Select your account
+   - Link to existing project? → No
+   - Project name? → fitgenius-ai (or your preferred name)
+   - Directory? → ./
+   - Want to modify settings? → No (or Yes to configure)
+
+### Option 2: Deploy via Vercel Dashboard
+
+1. **Go to Vercel Dashboard**:
+   - Visit [vercel.com](https://vercel.com) and sign in
+
+2. **Add New Project**:
+   - Click "Add New Project"
+   - Select "Import Git Repository"
+   - Choose your GitHub repository
+
+3. **Configure Project**:
+   - Framework Preset: `Vite`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Root Directory: `.'
+
+4. **Set Environment Variables**:
+   Go to Project Settings → Environment Variables and add:
+   ```
+   VITE_SUPABASE_URL=your-supabase-url
+   VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
+
+5. **Deploy**:
+   - Click "Deploy"
+   - Vercel will build and deploy your app
+
+### Option 3: Deploy via Git Integration
+
+1. **Push to GitHub**:
+```bash
+git add .
+git commit -m "Initial commit"
+git push origin main
+```
+
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New Project"
+   - Import your GitHub repository
+   - Configure as in Option 2
+
+3. **Deploy**:
+   - Every push to main will automatically trigger a new deployment
+
+### Custom Domain (Optional)
+
+1. In Vercel Dashboard, go to your project
+2. Navigate to **Settings → Domains**
+3. Click "Add Domain"
+4. Enter your custom domain and follow the verification steps
+
+## API Configuration
+
+### Using Your Own Gemini API Key
+
+You can use your own Google Gemini API key for AI features:
+
+1. Open the app and go to Settings
+2. Enter your Gemini API key in the API Key field
+3. Save changes
+
+### Supabase Edge Functions
+
+The AI features are powered by Supabase Edge Functions:
+- `ai-trainer`: Handles workout plans, diet plans, and chat requests
+- Supports both default Lovable AI gateway and custom Gemini API keys
+- Includes rate limiting and error handling
+
+## Project Structure
+
+```
+ai-fit-buddy/
+├── src/
+│   ├── components/
+│   │   ├── AIChat.tsx          # AI Coach chat interface
+│   │   ├── Dashboard.tsx       # Main dashboard
+│   │   ├── DietPlanView.tsx    # Diet plan display
+│   │   ├── OnboardingForm.tsx  # User onboarding
+│   │   ├── ProgressTracker.tsx # Progress logging
+│   │   ├── Settings.tsx        # App settings
+│   │   └── WorkoutPlanView.tsx # Workout plan display
+│   ├── hooks/
+│   │   ├── useLocalStorage.ts  # Local storage hook
+│   │   └── useToast.ts         # Toast notifications
+│   ├── integrations/
+│   │   └── supabase/           # Supabase client
+│   ├── pages/
+│   │   └── Index.tsx           # Main page
+│   ├── types/
+│   │   └── fitness.ts          # TypeScript types
+│   ├── App.tsx                 # App component
+│   └── main.tsx                # Entry point
+├── supabase/
+│   └── functions/
+│       └── ai-trainer/         # Edge Function
+├── index.html                  # HTML entry
+├── package.json
+├── tailwind.config.ts
+├── vite.config.ts
+└── README.md
+```
+
+## Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+The build output will be in the `dist` directory.
+
+## Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
+
+## Support
+
+For issues and feature requests, please open a GitHub issue.
+
+---
+
+Built with ❤️ using React, TypeScript, Tailwind CSS, and AI
+
+# Fit-Genius
