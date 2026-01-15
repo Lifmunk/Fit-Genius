@@ -2,6 +2,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { UserProfile } from '@/types/fitness';
 import OnboardingForm from '@/components/OnboardingForm';
 import Dashboard from '@/components/Dashboard';
+import LandingPage from '@/components/LandingPage';
 
 const Index = () => {
   const [userProfile, setUserProfile] = useLocalStorage<UserProfile | null>('fitgenius-profile', null);
@@ -19,11 +20,8 @@ const Index = () => {
     setUserProfile(null);
   };
 
-  if (!userProfile) {
-    return <OnboardingForm onComplete={handleOnboardingComplete} />;
-  }
-
-  return <Dashboard profile={userProfile} onProfileUpdate={handleProfileUpdate} onLogout={handleLogout} />;
+  // Show landing page first, then onboarding or dashboard
+  return <LandingPage />;
 };
 
 export default Index;
