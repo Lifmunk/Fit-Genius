@@ -2,8 +2,8 @@
 
 FitGenius AI is your personal AI-powered fitness companion. It provides personalized workout plans, diet plans, and AI coaching to help you achieve your fitness goals.
 
-![Screenshot](https://ibb.co/xqvbR5NX)
-![Another Screenshot](https://ibb.co/C5sLyTB2)
+![Screenshot]([https://ibb.co/xqvbR5NX](https://usual-amethyst-vrev37303h.edgeone.app/Screenshot%20from%202026-01-15%2012-30-37.png))
+
 
 ## Features
 
