@@ -74,7 +74,7 @@ After onboarding, you'll see your personalized dashboard with:
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Lifmunk/Fit-Genius
 cd ai-fit-buddy
 ```
 
